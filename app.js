@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import users from './routes/users.js';
+
 dotenv.config();
 
 const app = express();
@@ -17,10 +19,13 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 /* Set the PORT and Start Web Server */
-app.set('port', PORT || 3000);
+app.set('port', PORT);
 const server = app.listen(PORT, () => {
-  console.log('Server: ' + PORT);
+  console.log(`SERVER RUNNING ON PORT: ${PORT}`);
 });
+
+/* Routes */
+app.use('/users', users);
 
 /* MongoDB Connection */
 mongoose.set('useCreateIndex', true);
