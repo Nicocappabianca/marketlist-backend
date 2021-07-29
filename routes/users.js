@@ -13,7 +13,6 @@ router.post('/login', async (req, res) => {
     const user = await Users.findOne({ email: email });
 
     if (!user) {
-      /* Invalid Credentials */
       res.status(200).json({
         Response: false,
         Message: `User not found`
@@ -22,16 +21,13 @@ router.post('/login', async (req, res) => {
       const validPassword = await bcrypt.compare(password, user.password);
 
       if (!validPassword) {
-        /* Invalid Credentials */
         res.status(200).json({
           Response: false,
           Message: `Wrong password or user`
         });
       } else {
-        /* Create an assign a TOKEN */
         const sessionToken = jwt.sign(
           {
-            /* Token Data */
             id: user.id
           },
           process.env.SECRET_TOKEN || '12345'
@@ -58,7 +54,7 @@ router.post('/register', async (req, res) => {
 
     console.log(`email: ${email} \n password: ${password}`);
 
-    /* Check if username/email already exists */
+    /* Check if email already exists */
     const emailExists = await Users.findOne({ email: email });
 
     if (emailExists) {
